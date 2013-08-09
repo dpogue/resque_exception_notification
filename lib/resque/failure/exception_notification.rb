@@ -1,5 +1,5 @@
 begin
-  require "exception_notification"
+  require 'exception_notifier'
 rescue LoadError
   raise "Can't find 'exception_notification' gem. Please add it to your Gemfile or install it."
 end
@@ -20,7 +20,7 @@ module Resque
           :args   => payload['args'].inspect
         }
 
-        ExceptionNotifier::Notifier.background_exception_notification(exception, :data => message).deliver
+        ExceptionNotifier.notify_exception(exception, :data => message)
       end
 
     end
